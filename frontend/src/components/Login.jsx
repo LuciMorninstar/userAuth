@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { login} from "../../utils/user";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import useUserStore from "../../utils/Store.js";
 
 
 
@@ -24,6 +25,11 @@ const Login = () => {
   const [data, setData] = useState([]);
 
   const navigate = useNavigate();
+
+
+//zustand
+// const user = useUserStore((state)=>state.user);
+const loginUser = useUserStore((state)=>state.login); //Name can be anything since there was already a login imported so loginUser used 
 
 
 
@@ -52,10 +58,12 @@ const Login = () => {
        toast.success(response.data.message);
        console.log("token",result.token)
          setData(result.data);
-         localStorage.setItem("token", result.token); 
+        //  localStorage.setItem("token", result.token); 
           //saving token in localstorage so that api interceptors can add Bearer to it `Bearer ${token}'
          console.log("user", result.data)  //user object
-         localStorage.setItem("user", result.data)
+        //  localStorage.setItem("user", JSON.stringify (result.data));
+
+         loginUser(result.data,result.token) //zustand store(Since login takes userData and token as a parameter)
          
          navigate("/");
 

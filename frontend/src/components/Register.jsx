@@ -5,6 +5,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { register } from "../../utils/user";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -21,6 +22,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+
+  const navigate = useNavigate();
 
 
 
@@ -47,7 +50,8 @@ const Register = () => {
      
       setData(result.data);
        toast.success(response.data.message);
-       console.log(result.data)
+       console.log(result.data);
+       navigate("/login");
 
 
 
